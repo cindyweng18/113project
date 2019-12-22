@@ -7,8 +7,8 @@
 #
 
 #Create a function to write more variations of H and L? or separate functions for H and L
-def variations():
-
+def create_h():
+    good_h = ['1','0','1','1','1','1','1','0','1','1','0','1']
 
 #The "good" H
 with open("datasets.txt","w") as file:
