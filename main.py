@@ -29,21 +29,22 @@ allTs = [array_H_1, array_H_2, array_H_3, array_H_4]
 # Trainings sets for Letter H
 # I need to know how to pull the arrays you guys created from the data set.
 # I guess you could help me link them to the code?
-for i in 200:  # Correct me: this should run through 200 training sets of H
+for i in 200:  # Fix me: this should run through 200 training sets of H
     random.shuffle(J)
     J1 = tuple(J[0:3])
     J2 = tuple(J[3:6])
     J3 = tuple(J[6:9])
     J4 = tuple(J[9:12])
     print(J1, J2, J3, J4)
-    S1 = create_s(J1, i) # Correct me: this sends to the function the actual H array from the data set
+    S1 = create_s(J1, i) # Fix me: this sends to the function the actual H array from the data set
     S2 = create_s(J2, i)
     S3 = create_s(J3, i)
     S4 = create_s(J4, i)
     print(S1, S2, S3, S4)
     allSs = [S1, S2, S3, S4]
-    for i in allSs: # loop incrementing all T_H arrays
-        match_found (allSs[i], allTs[i])
+    for j in allTs: # loop incrementing all T_H arrays
+        for i in allSs: # loop running through all S tuples
+            match_found (allSs[i], allTs[j])
     for i in range (len(allTs)): # prints all of T's after the incrementation
         print("\t", " ", allTs[i], "\t")
 
@@ -64,13 +65,14 @@ for i in 200:  # Correct me: this should run through 200 training sets of L
     L3 = tuple(L[6:9])
     L4 = tuple(L[9:12])
     print(L1, L2, L3, L4)
-    S1 = create_s(L1, i) # Correct me: this sends to the function the actual L array from the data set
+    S1 = create_s(L1, i) # Fix me: this sends to the function the actual L array from the data set
     S2 = create_s(L2, i)
     S3 = create_s(L3, i)
     S4 = create_s(L4, i)
     print(S1, S2, S3, S4)
     allSs = [S1, S2, S3, S4]
-    for i in allSs: # loop incrementing all T_L arrays
-        match_found (allSs[i], allLs[i])
-    for i in range (len(allTs)): # prints all of T's after the incrementation
+for j in allLs: # loop incrementing all T_L arrays
+    for i in allSs: # loop running through all S tuples
+        match_found (allSs[i], allLs[j])
+    for i in range (len(allLs)): # prints all of T's after the incrementation
         print("\t", " ", allLs[i], "\t")
