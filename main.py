@@ -7,6 +7,9 @@
 #
 import random
 
+def bin2Numconv(a):
+    b =((int(a[0]))*4) + ((int(a[1]))*2) + ((int(a[2]))*1) 
+    return b
 
 # Cindy's part: Create smaller set of lists 
 def create_S(small_tuple, original_list):
