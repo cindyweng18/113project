@@ -2,7 +2,7 @@
 # Cindy Weng Zhu
 # Mumtahid Akash
 # Hope Dunner
-# Zahrif Choudhury
+# Zarif Choudhury
 # Sajid Mahmud
 # Michal Moryosef
 
