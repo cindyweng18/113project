@@ -5,31 +5,26 @@
 #
 #
 #
-import random #allows us to use randint(0,1) -> function that randomly returns a 0 or 1
+import random
 
-#Create a function to write more variations of H and L? or separate functions for H and L
-def create_h():
-    good_h = ['1','0','1','1','1','1','1','0','1','1','0','1']
-    for i in range(12):
-        good_h[i] = str(random.randint(0,1))
-    return good_h
 
-def list_to_string(lst):
-    newstr = ""
-    for i in lst:
-        newstr = newstr + i
-    return newstr
-            
-                
-with open("datasets.txt","w") as file:
-    for i in range(50):
-        eich = create_h()
-        file.write(list_to_string(eich))
-    
+# Cindy's part: Create smaller set of lists 
+def create_S(small_tuple, original_list):
+    S = []
+    for i in small_tuple:
+        S.append(original_list[i-1])
+    return S
 
-#Separates each 0 and 1 into a single element of ONE list
-with open("datasets.txt","r") as file:
-    line = file.readlines()
-    print(line)
-#    bits = list(line)
-#    print(str(bits))
+RH = [1,0,1,1,1,1,1,0,1,1,0,1] # indexes start from 1 instead of 0
+J = [1,2,3,4,5,6,7,8,9,10,11,12] #indexes
+random.shuffle(J)
+J1 = tuple(J[0:3])
+J2 = tuple(J[3:6])
+J3 = tuple(J[6:9])
+J4 = tuple(J[9:12])
+print(J1,J2,J3,J4)
+S1 = create_S(J1,RH)
+S2 = create_S(J2,RH)
+S3 = create_S(J3,RH)
+S4 = create_S(J4,RH)
+print(S1,S2,S3,S4)
