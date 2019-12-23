@@ -7,51 +7,77 @@
 # Michal Moryosef
 
 import random
+# Michal and Akash Code
 
-def bin2Numconv(a):
-    b =((int(a[0]))*4) + ((int(a[1]))*2) + ((int(a[2]))*1) 
-    return b
 
-# Cindy's part: Create smaller set of lists 
-def create_S(small_tuple, original_list):
+def create_s(small_tuple, original_list):
     S = []
     for i in small_tuple:
         S.append(original_list[i-1])
     return S
 
-RH = [1,0,1,1,1,1,1,0,1,1,0,1] # indexes start from 1 instead of 0
-J = [1,2,3,4,5,6,7,8,9,10,11,12] #indexes
-random.shuffle(J)
-J1 = tuple(J[0:3])
-J2 = tuple(J[3:6])
-J3 = tuple(J[6:9])
-J4 = tuple(J[9:12])
-print(J1,J2,J3,J4)
-S1 = create_S(J1,RH)
-S2 = create_S(J2,RH)
-S3 = create_S(J3,RH)
-S4 = create_S(J4,RH)
-print(S1,S2,S3,S4)
+
+def bin_2_num(a):
+    b =((int(a[0]))*4) + ((int(a[1]))*2) + ((int(a[2]))*1)
+    return b
 
 
+def match_found(Si, Ti): # this is incrementing those 7 boxes in machine learning part
+    decimal_num = bin_2_num(Si)
+    Ti[decimal_num] += 1
 
 
-# DELETE this if this is not what we are supposed to do
-#Training the machine
+J = []
+array_H_1 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_H_2 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_H_3 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_H_4 = [0,  0,  0,  0,  0,  0,  0,  0]
+allTs = [array_H_1, array_H_2, array_H_3, array_H_4]
 
+# Trainings sets for Letter H
+# I need to know how to pull the arrays you guys created from the data set.
+# I guess you could help me link them to the code?
+for i in 200:  # Correct me: this should run through 200 training sets of H
+    random.shuffle(J)
+    J1 = tuple(J[0:3])
+    J2 = tuple(J[3:6])
+    J3 = tuple(J[6:9])
+    J4 = tuple(J[9:12])
+    print(J1, J2, J3, J4)
+    S1 = create_s(J1, i) # Correct me: this sends to the function the actual H array from the data set
+    S2 = create_s(J2, i)
+    S3 = create_s(J3, i)
+    S4 = create_s(J4, i)
+    print(S1, S2, S3, S4)
+    allSs = [S1, S2, S3, S4]
+    for i in allSs: # loop incrementing all T_H arrays
+        match_found (allSs[i], allTs[i])
+    for i in range (len(allTs)): # prints all of T's after the incrementation
+        print("\t", " ", allTs[i], "\t")
 
-T_1H = [0,  0,  0,  0,  0,  0,  0,  0]
-T_2H = [0,  0,  0,  0,  0,  0,  0,  0]
-T_3H = [0,  0,  0,  0,  0,  0,  0,  0]
-T_4H = [0,  0,  0,  0,  0,  0,  0,  0]
-
-allTs = [T_1H, T_2H, T_3H, T_4H]
-allSs = [S1, S2, S3, S4]
-def matchFound (Ti, Si): # this is just to increment those 7 boxes in machine learning part
-    decimalNum = bin2Numconv(Si)
-    Ti[decimalNum] += 1
-
-print ("\n\nindex:  0  1  2  3  4  5  6  7")
-for i in range (len(allTs)): # loop to repeat incrementing all T arrays
-    matchFound(allTs[i], allSs[i])
-    print ("\t"," ",allTs[i],"\t")
+array_L_1 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_L_2 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_L_3 = [0,  0,  0,  0,  0,  0,  0,  0]
+array_L_4 = [0,  0,  0,  0,  0,  0,  0,  0]
+allLs = [array_L_1, array_L_2, array_L_3, array_L_4]
+# Trainings sets for Letter L
+# same thing here guys,
+# I need to know how to pull the arrays you created from the data set.
+# I guess you could help me link them to the code?
+for i in 200:  # Correct me: this should run through 200 training sets of L
+    random.shuffle(J)
+    J1 = tuple(J[0:3])
+    J2 = tuple(J[3:6])
+    J3 = tuple(J[6:9])
+    J4 = tuple(J[9:12])
+    print(J1, J2, J3, J4)
+    S1 = create_s(J1, i) # Correct me: this sends to the function the actual L array from the data set
+    S2 = create_s(J2, i)
+    S3 = create_s(J3, i)
+    S4 = create_s(J4, i)
+    print(S1, S2, S3, S4)
+    allSs = [S1, S2, S3, S4]
+    for i in allSs: # loop incrementing all T_H arrays
+        match_found (allSs[i], allTs[i])
+    for i in range (len(allTs)): # prints all of T's after the incrementation
+        print("\t", " ", allTs[i], "\t")
