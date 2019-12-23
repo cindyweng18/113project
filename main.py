@@ -1,10 +1,11 @@
 # Names:
 # Cindy Weng Zhu
 # Mumtahid Akash
-#
-#
-#
-#
+# Hope Dunner
+# Zahrif Choudhury
+# Sajid Mahmud
+# Michal Moryosef
+
 import random
 
 def bin2Numconv(a):
