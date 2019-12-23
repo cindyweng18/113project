@@ -133,7 +133,7 @@ with open("data_set.txt","a+") as dataSet:
             dataSet.write(" L\n")
     for i in range(len(testingSet)):
         for j in range(len(testingSet[i])):
-            dataSet.write(str(trainingSet[i][j]))
+            dataSet.write(str(testingSet[i][j]))
         if i < 100:
             dataSet.write(" H\n")
         else:
@@ -149,20 +149,30 @@ with open("data_set.txt","r") as dataSet:
     dataSet.close()
 
 
-# In[15]:
-
-
-len(trainingSet)
-
-
 # In[17]:
 
 
-len(testingSet)
+with open("training_set.txt","a+") as ds:
+    for i in range(len(trainingSet)):
+        for j in range(len(trainingSet[i])):
+            ds.write(str(trainingSet[i][j]))
+        if i < 200:
+            ds.write(" H\n")
+        else:
+            ds.write(" L\n")
+    ds.close()
 
 
-# In[ ]:
+# In[18]:
 
 
-
+with open("testing_set.txt","a+") as dst:
+    for i in range(len(testingSet)):
+        for j in range(len(testingSet[i])):
+            dst.write(str(testingSet[i][j]))
+        if i < 100:
+            dst.write(" H\n")
+        else:
+            dst.write(" L\n")
+    dst.close()
 
