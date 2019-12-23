@@ -8,9 +8,9 @@
 
 import random
 
-def bin2Numconv(a):
-    b =((int(a[0]))*4) + ((int(a[1]))*2) + ((int(a[2]))*1) 
-    return b
+def bin2Numconv(userlist):
+    numeral =((int(userlist[0]))*4) + ((int(userlist[1]))*2) + ((int(userlist[2]))*1) 
+    return numeral
 
 # Cindy's part: Create smaller set of lists 
 def create_S(small_tuple, original_list):
