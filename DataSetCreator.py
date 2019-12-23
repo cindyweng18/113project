@@ -127,18 +127,42 @@ with open("data_set.txt","a+") as dataSet:
     for i in range(len(trainingSet)):
         for j in range(len(trainingSet[i])):
             dataSet.write(str(trainingSet[i][j]))
-        dataSet.write("\n")
+        if i < 200:
+            dataSet.write(" H\n")
+        else:
+            dataSet.write(" L\n")
     for i in range(len(testingSet)):
         for j in range(len(testingSet[i])):
             dataSet.write(str(trainingSet[i][j]))
-        dataSet.write("\n")
+        if i < 100:
+            dataSet.write(" H\n")
+        else:
+            dataSet.write(" L\n")
     dataSet.close
 
 
-# In[15]:
+# In[14]:
 
 
 with open("data_set.txt","r") as dataSet:
     print(dataSet.read())
     dataSet.close()
+
+
+# In[15]:
+
+
+len(trainingSet)
+
+
+# In[17]:
+
+
+len(testingSet)
+
+
+# In[ ]:
+
+
+
 
