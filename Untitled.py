@@ -68,18 +68,16 @@ len(listOfH)
 
 # Takes a list parameter and returns a list without any duplicates
 def remove_duplicates (userList):
-    userListLength = int (len (userList))
     i = 0
     i = int (i)
-    while i < userListLength:
-        j = 0
+    while i < len(userList):
+        j = 1
         j = int (j)
-        while j < userListLength:
+        while j < len(userList):
             if userList[i] == userList[j] and i != j:
-                userList [i] = userList [userListLength - 1]
+                userList [j] = userList [len(userList) - 1]
                 userList.pop()
-                userListLength -= 1
-                i-= 1
+                j-= 1
             else:
                 j += 1
         i += 1
