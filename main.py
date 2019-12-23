@@ -1,11 +1,3 @@
-# Names:
-# Cindy Weng Zhu
-# Mumtahid Akash
-# Hope Dunner
-# Zarif Choudhury
-# Sajid Mahmud
-# Michal Moryosef
-
 import random
 # Michal and Akash Code
 
@@ -27,7 +19,7 @@ def match_found(Si, Ti): # this is incrementing those 7 boxes in machine learnin
     Ti[decimal_num] += 1
 
 
-J = []
+J = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 array_H_1 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_H_2 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_H_3 = [0,  0,  0,  0,  0,  0,  0,  0]
@@ -55,6 +47,7 @@ for i in 200:  # Correct me: this should run through 200 training sets of H
     for i in range (len(allTs)): # prints all of T's after the incrementation
         print("\t", " ", allTs[i], "\t")
 
+L = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 array_L_1 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_L_2 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_L_3 = [0,  0,  0,  0,  0,  0,  0,  0]
@@ -66,18 +59,18 @@ allLs = [array_L_1, array_L_2, array_L_3, array_L_4]
 # I guess you could help me link them to the code?
 for i in 200:  # Correct me: this should run through 200 training sets of L
     random.shuffle(J)
-    J1 = tuple(J[0:3])
-    J2 = tuple(J[3:6])
-    J3 = tuple(J[6:9])
-    J4 = tuple(J[9:12])
-    print(J1, J2, J3, J4)
-    S1 = create_s(J1, i) # Correct me: this sends to the function the actual L array from the data set
-    S2 = create_s(J2, i)
-    S3 = create_s(J3, i)
-    S4 = create_s(J4, i)
+    L1 = tuple(L[0:3])
+    L2 = tuple(L[3:6])
+    L3 = tuple(L[6:9])
+    L4 = tuple(L[9:12])
+    print(L1, L2, L3, L4)
+    S1 = create_s(L1, i) # Correct me: this sends to the function the actual L array from the data set
+    S2 = create_s(L2, i)
+    S3 = create_s(L3, i)
+    S4 = create_s(L4, i)
     print(S1, S2, S3, S4)
     allSs = [S1, S2, S3, S4]
-    for i in allSs: # loop incrementing all T_H arrays
-        match_found (allSs[i], allTs[i])
+    for i in allSs: # loop incrementing all T_L arrays
+        match_found (allSs[i], allLs[i])
     for i in range (len(allTs)): # prints all of T's after the incrementation
-        print("\t", " ", allTs[i], "\t")
+        print("\t", " ", allLs[i], "\t")
