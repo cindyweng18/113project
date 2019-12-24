@@ -148,7 +148,7 @@ with open("data_set.txt","w") as dataSet:
 # Create testing set #
 my_file = open ("data_set.txt", "r")
 newShuffledArrayTesting = []
-newShuffledArrayTraining = []
+arrayTraining = []
 i = 0
 while True:
     if i < 400:
@@ -156,7 +156,7 @@ while True:
         a = a.replace("\r", "").replace("\n", "")
         if a ==  "":
             break
-        newShuffledArrayTraining.append(a)
+        arrayTraining.append(a)
         i += 1
     else:
         a = my_file.readline()
@@ -167,12 +167,11 @@ while True:
 my_file.close()
 
 
-# In[2]:
+# In[6]:
 
 
 #print (newArray)
 newShuffledArrayTesting = random.sample (newShuffledArrayTesting, len(newShuffledArrayTesting))
-newShuffledArrayTraining = random.sample(newShuffledArrayTraining, len(newShuffledArrayTraining))
 #print (newShuffledArray)
 
 # Training Section #
@@ -192,11 +191,11 @@ allTs = [array_H_1, array_H_2, array_H_3, array_H_4]
 
 trainingofH=[]
 for i in range (200):
-    trainingofH.append(newShuffledArrayTraining[i])
+    trainingofH.append(arrayTraining[i])
     
 trainingofL=[]
-for i in range (200):
-    trainingofL.append(newShuffledArrayTraining[i])
+for i in range (199,400):
+    trainingofL.append(arrayTraining[i])
     
 # S sets
 for i in trainingofH:
@@ -277,6 +276,12 @@ for i in newShuffledArrayTesting:
         x.append(0)
 average = np.mean(x)
 print(average*100, "% accuracy")
+
+
+# In[5]:
+
+
+arrayTraining[199]
 
 
 # In[ ]:
