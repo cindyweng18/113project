@@ -222,7 +222,6 @@ j = 0
 x = []
 for i in newShuffledArray:
     S1 = create_s(J1, i)
-    S1 = create_s(J1, i)
     S2 = create_s(J2, i)
     S3 = create_s(J3, i)
     S4 = create_s(J4, i)
