@@ -94,6 +94,18 @@ def correct_class(actual_letter,predicted_letter):
         return "True"
     elif actual_letter != predicted_letter:
         return "False"
+    
+def pred_H_wrong(Si, TLs, n, d = 0.5):
+    sum = 0
+    decnum = bin_2_num(Si)
+    sum = sum + TLs[decnum] - (d*n)
+    return sum
+
+def pred_L_wrong(Si, THs, n, d = 0.5):
+    sum = 0
+    decnum = bin_2_num(Si)
+    sum = sum + THs[decnum] - (d*n)
+    return sum
 
 # Dataset creation # 
 goodH = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
@@ -167,7 +179,7 @@ while True:
 my_file.close()
 
 
-# In[6]:
+# In[2]:
 
 
 #print (newArray)
@@ -264,21 +276,45 @@ for i in newShuffledArrayTesting:
     total_sumL = sumL1 + sumL2 + sumL3 + sumL4
     
 #    print(total_sumH, total_sumL)
+     
+    print(total_sumH, total_sumL)
     predicted_letter = predict_class(total_sumH, total_sumL)
     actual_letter = newShuffledArrayTesting[j][13]
     b = correct_class(actual_letter, predicted_letter)
-    print(newShuffledArrayTesting[j][0:12], "Predicted Class:", predicted_letter, "Actual Class:", actual_letter,b)
+    if predicted_letter == "H":
+        while b == "False":
+            n = 1
+            sumWH1 = pred_H_wrong(allSt[0], allLs[0], n)
+            sumWH2 = pred_H_wrong(allSt[1], allLs[1], n)
+            sumWH3 = pred_H_wrong(allSt[2], allLs[2], n)
+            sumWH4 = pred_H_wrong(allSt[3], allLs[3], n)
+            total_sumWH = sumWH1 + sumWH2 + sumWH3 + sumWH4
+            print(total_sumWH, total_sumL)
+            predicted_letter = predict_class(total_sumWH, total_sumL)
+            b = correct_class(actual_letter, predicted_letter)
+            n += 1
+    elif predicted_letter == "L":
+        if b == False:
+            n = 1
+            sumWL1 = pred_L_wrong(allSt[0], allTs[0], n)
+            sumWL2 = pred_L_wrong(allSt[1], allTs[1], n)
+            sumWL3 = pred_L_wrong(allSt[2], allTs[2], n)
+            sumWL4 = pred_L_wrong(allSt[3], allTs[3], n)
+            total_sumL = sumWL1 + sumWL2 + sumWL3 + sumWL4
+            predicted_letter = predict_class(total_sumL, total_sumH)
+            b = correct_class(actual_letter, predicted_letter)
+            n += 1
+    print(newShuffledArrayTesting[j][0:12], "Actual Class:", actual_letter, "Predicted Class:", predicted_letter, b)
     j += 1
-    # Accuracy 
     if b == "True":
         x.append(1)
     elif b == "False":
         x.append(0)
 average = np.mean(x)
-print(average*100, "% accuracy")
+print(average*100, "% accuracy", sep = "")
 
 
-# In[5]:
+# In[3]:
 
 
 arrayTraining[199]
