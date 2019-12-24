@@ -14,15 +14,15 @@ def variant(arr,sentryPos):
 # In[2]:
 
 
-def printList(arr):
-    for i in range(len(arr)):
-        for j in range(len(arr[i])):
-            if (j+1)%3 != 0:
-                print(arr[i][j],end = " ")
-            else:
-                print(arr[i][j],end = " ")
-                print()
-        print("-----")
+#def printList(arr):
+#    for i in range(len(arr)):
+#        for j in range(len(arr[i])):
+#            if (j+1)%3 != 0:
+#                print(arr[i][j],end = " ")
+#            else:
+#                print(arr[i][j],end = " ")
+#                print()
+#        print("-----")
 
 
 # In[3]:
@@ -111,10 +111,10 @@ for i in range(200):
     trainingSet.append(listOfH[i]) #first 200 in text file will be H the following 200 will be L
 for i in range(200):
     trainingSet.append(listOfL[i])
-for i in range(201,301): 
+for i in range(201,301):
     testingSet.append(listOfH[i])
 for i in range(201,301):
-    testingSet.append(listOfL[i])    
+    testingSet.append(listOfL[i])
 
 
 # In[13]:
@@ -130,7 +130,7 @@ with open("data_set.txt","a+") as dataSet:
             dataSet.write(" L\n")
     for i in range(len(testingSet)):
         for j in range(len(testingSet[i])):
-            dataSet.write(str(trainingSet[i][j]))
+            dataSet.write(str(testingSet[i][j]))
         if i < 100:
             dataSet.write(" H\n")
         else:
@@ -141,21 +141,54 @@ with open("data_set.txt","a+") as dataSet:
 # In[14]:
 
 
-with open("data_set.txt","r") as dataSet:
-    print(dataSet.read())
-    dataSet.close()
-
-
-# In[15]:
-
-
-len(trainingSet)
+#with open("data_set.txt","r") as dataSet:
+#    print(dataSet.read())
+#    dataSet.close()
 
 
 # In[17]:
 
 
-len(testingSet)
+with open("training_set.txt","a+") as ds:
+    for i in range(len(trainingSet)):
+        for j in range(len(trainingSet[i])):
+            ds.write(str(trainingSet[i][j]))
+        if i < 200:
+            ds.write(" H\n")
+        else:
+            ds.write(" L\n")
+    ds.close()
+
+
+# In[18]:
+
+
+with open("testing_set.txt","a+") as dst:
+    for i in range(len(testingSet)):
+        for j in range(len(testingSet[i])):
+            dst.write(str(testingSet[i][j]))
+        if i < 100:
+            dst.write(" H\n")
+        else:
+            dst.write(" L\n")
+    dst.close()
+
+    
+# this is for creating a temporary merged array and a shuffled array for the testing set
+import random
+my_file = open ("training_set.txt", "r")
+newArray = []
+newShuffledArray = []
+while True:
+    a = my_file.readline()
+    a = a.replace("\r", "").replace("\n", "")
+    if a ==  "":
+        break
+    newArray.append(a)
+my_file.close()
+#print (newArray)
+newShuffledArray = random.sample (newArray, len(newArray))
+#print (newShuffledArray)
 
 
 # In[ ]:
@@ -176,6 +209,35 @@ def bin_2_num(a):
 def match_found(Si, Ti): # this is incrementing those 7 boxes in machine learning part
     decimal_num = bin_2_num(Si)
     Ti[decimal_num] += 1
+
+def add_sumH(Si, THs):
+    sum = 0;
+    decnumH = bin_2_num(Si)
+    sum += THs[decnumH]
+    return sum
+
+def add_sumL(Si, TLs):
+    sum = 0;
+    decnumL = bin_2_num(Si)
+    sum += TLs[decnumL]
+    return sum
+
+def predict_class(total_sumH,total_sumL):
+    predicted_class = ""
+    if total_sumH > total_sumL:
+        predicted_class = "H"
+    elif total_sumH < total_sumL:
+        predicted_class = "L"
+    else:
+        predicted_class = "H"
+    return predicted_class
+    
+def correct_class(actual_letter,predicted_letter):
+    if actual_letter == predicted_letter:
+        return "True"
+    elif actual_letter != predicted_letter:
+        return "False"
+
     
 J = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 random.shuffle(J)
@@ -183,7 +245,7 @@ J1 = tuple(J[0:3])
 J2 = tuple(J[3:6])
 J3 = tuple(J[6:9])
 J4 = tuple(J[9:12])
-print(J1, J2, J3, J4)
+#print(J1, J2, J3, J4)
 
 array_H_1 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_H_2 = [0,  0,  0,  0,  0,  0,  0,  0]
@@ -197,9 +259,9 @@ allTs = [array_H_1, array_H_2, array_H_3, array_H_4]
 
 trainingofH=[]
 for i in range (200):
-    fiveofH.append(listOfH[i])
+    trainingofH.append(listOfH[i])
     
-trainingofL=[]    
+trainingofL=[]
 for i in range (200):
     trainingofL.append(listOfL[i])
     
@@ -210,12 +272,12 @@ for i in trainingofH:  # should run through 200 training sets of H
     S2 = create_s(J2, i)
     S3 = create_s(J3, i)
     S4 = create_s(J4, i)
-    print(S1, S2, S3, S4)
+    #print(S1, S2, S3, S4)
     allSs = [S1, S2, S3, S4]
                                                                                                                     
-    match_found (allSs[0], allTs[0])                                                                                                                    
-    match_found (allSs[1], allTs[1])                                                                                                                    
-    match_found (allSs[2], allTs[2])                                                                                                                    
+    match_found (allSs[0], allTs[0])
+    match_found (allSs[1], allTs[1])
+    match_found (allSs[2], allTs[2])
     match_found (allSs[3], allTs[3])
    
 for i in range (len(allTs)): # prints all of T's after the incrementation
@@ -236,15 +298,55 @@ for i in trainingofL:  # should run through 200 training sets of L
     S2 = create_s(J2, i)
     S3 = create_s(J3, i)
     S4 = create_s(J4, i)
-    print(S1, S2, S3, S4)
+    #print(S1, S2, S3, S4)
     allSs = [S1, S2, S3, S4]
 
                                                                                                                      
-    match_found (allSs[0], allLs[0])                                                                                                                    
-    match_found (allSs[1], allLs[1])                                                                                                                    
-    match_found (allSs[2], allLs[2])                                                                                                                    
+    match_found (allSs[0], allLs[0])
+    match_found (allSs[1], allLs[1])
+    match_found (allSs[2], allLs[2])
     match_found (allSs[3], allLs[3])
         
 for i in range (len(allLs)): # prints all of L's after the incrementation
     print("\t", " this is for L ", allLs[i], "\t")
+
+j = 0
+x = []
+for i in newShuffledArray:
+    S1 = create_s(J1, i)
+    S1 = create_s(J1, i)
+    S2 = create_s(J2, i)
+    S3 = create_s(J3, i)
+    S4 = create_s(J4, i)
+    #print(S1, S2, S3, S4)
+    allSt = [S1, S2, S3, S4]
+
+    total_sumH = 0;
+    sumH1 = add_sumH(allSt[0], allTs[0])
+    sumH2 = add_sumH(allSt[1], allTs[1])
+    sumH3 = add_sumH(allSt[2], allTs[2])
+    sumH4 = add_sumH(allSt[3], allTs[3])
+    total_sumH = sumH1 + sumH2 + sumH3 + sumH4
+
+    total_sumL = 0;
+    sumL1 = add_sumL(allSt[0], allLs[0])
+    sumL2 = add_sumL(allSt[1], allLs[1])
+    sumL3 = add_sumL(allSt[2], allLs[2])
+    sumL4 = add_sumL(allSt[3], allLs[3])
+    total_sumL = sumL1 + sumL2 + sumL3 + sumL4
+    
+#    print(total_sumH, total_sumL)
+    predicted_letter = predict_class(total_sumH, total_sumL)
+    actual_letter = newShuffledArray[j][13]
+    b = correct_class(actual_letter, predicted_letter)
+    print(newShuffledArray[j][0:11], "Actual Class:", actual_letter, "Predicted Class:", predicted_letter, b)
+    j += 1
+    if b == "True":
+        x.append(1)
+    elif b == "False":
+        x.append(0)
+
+import numpy as np
+average = np.mean(x)
+print(average)
 
