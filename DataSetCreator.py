@@ -176,3 +176,20 @@ with open("testing_set.txt","a+") as dst:
             dst.write(" L\n")
     dst.close()
 
+    
+# this is for creating a temporary merged array and a shuffled array for the testing set
+import random
+my_file = open ("training_set.txt", "r")
+newArray = []
+newShuffledArray = []
+while True:
+    a = my_file.readline()
+    a = a.replace("\r", "").replace("\n", "")
+    if a ==  "":
+        break
+    newArray.append(a)
+my_file.close()
+#print (newArray)
+newShuffledArray = random.sample (newArray, len(newArray))
+#print (newShuffledArray)
+
