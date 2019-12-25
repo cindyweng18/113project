@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[2]:
 
 
 #Names:
@@ -214,7 +214,8 @@ for i in trainingofH:
     match_found (allSs[3], allTs[3])  
     
 for i in range (len(allTs)):
-    print("\t", " this is for H ", allTs[i], "\t")
+    h = "H"+str(i+1)
+    print(h," = ", allTs[i])
 # TLs
 array_L_1 = [0,  0,  0,  0,  0,  0,  0,  0]
 array_L_2 = [0,  0,  0,  0,  0,  0,  0,  0]
@@ -237,8 +238,9 @@ for i in trainingofL:
     match_found (allSs[3], allLs[3])
         
 for i in range (len(allLs)): 
-    print("\t", " this is for L ", allLs[i], "\t")
-
+    l = "L"+str(i+1)
+    print(l," = ", allLs[i])
+print("")
 # Testing Section #
 x = [] # list to find accuracy will append 1 if match 0 if not
 for i in newShuffledArrayTesting:
@@ -265,7 +267,6 @@ for i in newShuffledArrayTesting:
     
 #    print(total_sumH, total_sumL)
      
-    print(total_sumH, total_sumL)
     predicted_letter = predict_class(total_sumH, total_sumL)
     actual_letter = newShuffledArrayTesting[j][13]
     b = correct_class(actual_letter, predicted_letter)
@@ -278,7 +279,6 @@ for i in newShuffledArrayTesting:
             sumWH3 = pred_H_wrong(allSt[2], allLs[2], n)
             sumWH4 = pred_H_wrong(allSt[3], allLs[3], n)
             total_sumWH = sumWH1 + sumWH2 + sumWH3 + sumWH4
-            print(total_sumWH, total_sumL)
             predicted_letter = predict_class(total_sumWH, total_sumL)
             b = correct_class(actual_letter, predicted_letter)
             n += 1
@@ -300,4 +300,10 @@ for i in newShuffledArrayTesting:
         x.append(0)
 average = np.mean(x)
 print(average*100, "% accuracy", sep = "")
+
+
+# In[ ]:
+
+
+
 
