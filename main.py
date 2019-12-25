@@ -1,10 +1,16 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 #Names:
 #Sajid Mahmud
 #Mumtahid Akash
 #Michal Moryosef
-#
-#
-#
+#Zarif Choudhury
+#Hope Dunner
+#Cindy Weng Zhu
 
 import random
 import numpy as np
@@ -88,6 +94,18 @@ def correct_class(actual_letter,predicted_letter):
         return "True"
     elif actual_letter != predicted_letter:
         return "False"
+    
+def pred_H_wrong(Si, TLs, n, d = 0.5):
+    sum = 0
+    decnum = bin_2_num(Si)
+    sum = sum + TLs[decnum] - (d*n)
+    return sum
+
+def pred_L_wrong(Si, THs, n, d = 0.5):
+    sum = 0
+    decnum = bin_2_num(Si)
+    sum = sum + THs[decnum] - (d*n)
+    return sum
 
 # Dataset creation # 
 goodH = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
@@ -97,9 +115,9 @@ listOfH = goodH.copy()
 while len(listOfH)<300:
     listOfH = addVariants(listOfH)
 
-#goodL = [[1,0,0,1,0,0,1,0,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,0,0],[0,1,0,0,1,0,0,1,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,1,0],[1,0,0,1,0,0,1,0,1,1,1,1],[0,1,0,0,1,0,0,1,1,1,1,1],[0,0,1,0,0,1,0,0,1,0,0,1],[0,1,1,0,0,1,0,0,1,0,0,1],[1,0,0,1,0,0,1,1,1,1,1,1],[0,1,0,0,1,0,1,1,0,1,1,0],[0,1,0,0,1,0,1,1,1,1,1,1],[0,0,0,0,0,0,1,0,0,1,1,1],[0,1,1,0,1,1,0,1,1,0,1,1]]
+goodL = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
 
-goodL = [[1,0,0,1,0,0,1,0,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,0,0],[0,1,0,0,1,0,0,1,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,1,0],[1,0,0,1,0,0,1,0,1,1,1,1],[0,1,0,0,1,0,0,1,1,1,1,1],[1,0,0,1,0,0,1,1,1,1,1,1],[0,1,0,0,1,0,1,1,0,1,1,0],[0,1,0,0,1,0,1,1,1,1,1,1],[0,1,1,0,1,1,0,1,1,0,1,1]]
+#goodL = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
 
 listOfL = goodL.copy()
 
@@ -134,23 +152,34 @@ with open("data_set.txt","w") as dataSet:
             dataSet.write(" L\n")
     dataSet.close
 
-#with open("data_set.txt","r") as dataSet:
-#    print(dataSet.read())
-#    dataSet.close()
-
 
 # Create testing set #
-my_file = open ("testing_set.txt", "r")
-newShuffledArray = []
+my_file = open ("data_set.txt", "r")
+newShuffledArrayTesting = []
+arrayTraining = []
+i = 0
 while True:
-    a = my_file.readline()
-    a = a.replace("\r", "").replace("\n", "")
-    if a ==  "":
-        break
-    newShuffledArray.append(a)
+    if i < 400:
+        a = my_file.readline()
+        a = a.replace("\r", "").replace("\n", "")
+        if a ==  "":
+            break
+        arrayTraining.append(a)
+        i += 1
+    else:
+        a = my_file.readline()
+        a = a.replace("\r", "").replace("\n", "")
+        if a ==  "":
+            break
+        newShuffledArrayTesting.append(a)
 my_file.close()
+
+
+# In[2]:
+
+
 #print (newArray)
-newShuffledArray = random.sample (newShuffledArray, len(newShuffledArray))
+newShuffledArrayTesting = random.sample (newShuffledArrayTesting, len(newShuffledArrayTesting))
 #print (newShuffledArray)
 
 # Training Section #
@@ -170,11 +199,11 @@ allTs = [array_H_1, array_H_2, array_H_3, array_H_4]
 
 trainingofH=[]
 for i in range (200):
-    trainingofH.append(listOfH[i])
+    trainingofH.append(arrayTraining[i])
     
 trainingofL=[]
-for i in range (200):
-    trainingofL.append(listOfL[i])
+for i in range (199,400):
+    trainingofL.append(arrayTraining[i])
     
 # S sets
 for i in trainingofH:
@@ -218,9 +247,8 @@ for i in range (len(allLs)):
     print("\t", " this is for L ", allLs[i], "\t")
 
 # Testing Section #
-j = 0
 x = []
-for i in newShuffledArray:
+for i in newShuffledArrayTesting:
     S1 = create_s(J1, i)
     S2 = create_s(J2, i)
     S3 = create_s(J3, i)
@@ -243,15 +271,39 @@ for i in newShuffledArray:
     total_sumL = sumL1 + sumL2 + sumL3 + sumL4
     
 #    print(total_sumH, total_sumL)
+     
+    print(total_sumH, total_sumL)
     predicted_letter = predict_class(total_sumH, total_sumL)
-    actual_letter = newShuffledArray[j][13]
+    actual_letter = newShuffledArrayTesting[j][13]
     b = correct_class(actual_letter, predicted_letter)
-    print(newShuffledArray[j][0:12], "Actual Class:", actual_letter, "Predicted Class:", predicted_letter, b)
-    j += 1
-    # Accuracy 
+    if predicted_letter == "H":
+        while b == "False":
+            n = 1
+            sumWH1 = pred_H_wrong(allSt[0], allLs[0], n)
+            sumWH2 = pred_H_wrong(allSt[1], allLs[1], n)
+            sumWH3 = pred_H_wrong(allSt[2], allLs[2], n)
+            sumWH4 = pred_H_wrong(allSt[3], allLs[3], n)
+            total_sumWH = sumWH1 + sumWH2 + sumWH3 + sumWH4
+            print(total_sumWH, total_sumL)
+            predicted_letter = predict_class(total_sumWH, total_sumL)
+            b = correct_class(actual_letter, predicted_letter)
+            n += 1
+    elif predicted_letter == "L":
+        if b == "False":
+            n = 1
+            sumWL1 = pred_L_wrong(allSt[0], allTs[0], n)
+            sumWL2 = pred_L_wrong(allSt[1], allTs[1], n)
+            sumWL3 = pred_L_wrong(allSt[2], allTs[2], n)
+            sumWL4 = pred_L_wrong(allSt[3], allTs[3], n)
+            total_sumL = sumWL1 + sumWL2 + sumWL3 + sumWL4
+            predicted_letter = predict_class(total_sumL, total_sumH)
+            b = correct_class(actual_letter, predicted_letter)
+            n += 1
+    print(newShuffledArrayTesting[j][0:12], "Actual Class:", actual_letter, "Predicted Class:", predicted_letter, b)
     if b == "True":
         x.append(1)
     elif b == "False":
         x.append(0)
 average = np.mean(x)
-print(average)
+print(average*100, "% accuracy", sep = "")
+
