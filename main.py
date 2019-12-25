@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 #Names:
@@ -16,7 +16,7 @@ import random
 import numpy as np
 
 random.seed(84)
-
+#functions for data set creation
 def variant(arr,sentryPos):
     changed = 0
     new_H = arr.copy();
@@ -52,7 +52,7 @@ def addVariants(arr):
     arr = variant_list(arr)
     remove_duplicates(arr)
     return arr
-
+#functions for machine learning and other essential parts below
 def create_s(small_tuple, original_list):
     S = []
     for i in small_tuple:
@@ -94,7 +94,7 @@ def correct_class(actual_letter,predicted_letter):
         return "True"
     elif actual_letter != predicted_letter:
         return "False"
-    
+#functions for bonus below 
 def pred_H_wrong(Si, TLs, n, d = 0.5):
     sum = 0
     decnum = bin_2_num(Si)
@@ -116,8 +116,6 @@ while len(listOfH)<300:
     listOfH = addVariants(listOfH)
 
 goodL = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
-
-#goodL = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
 
 listOfL = goodL.copy()
 
@@ -173,11 +171,6 @@ while True:
             break
         newShuffledArrayTesting.append(a)
 my_file.close()
-
-
-# In[2]:
-
-
 #print (newArray)
 newShuffledArrayTesting = random.sample (newShuffledArrayTesting, len(newShuffledArrayTesting))
 #print (newShuffledArray)
@@ -247,7 +240,7 @@ for i in range (len(allLs)):
     print("\t", " this is for L ", allLs[i], "\t")
 
 # Testing Section #
-x = []
+x = [] # list to find accuracy will append 1 if match 0 if not
 for i in newShuffledArrayTesting:
     S1 = create_s(J1, i)
     S2 = create_s(J2, i)
@@ -276,6 +269,7 @@ for i in newShuffledArrayTesting:
     predicted_letter = predict_class(total_sumH, total_sumL)
     actual_letter = newShuffledArrayTesting[j][13]
     b = correct_class(actual_letter, predicted_letter)
+    #implementation of bonus below
     if predicted_letter == "H":
         while b == "False":
             n = 1
@@ -289,7 +283,7 @@ for i in newShuffledArrayTesting:
             b = correct_class(actual_letter, predicted_letter)
             n += 1
     elif predicted_letter == "L":
-        if b == "False":
+        while b == "False":
             n = 1
             sumWL1 = pred_L_wrong(allSt[0], allTs[0], n)
             sumWL2 = pred_L_wrong(allSt[1], allTs[1], n)
