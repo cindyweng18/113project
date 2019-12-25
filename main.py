@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[ ]:
 
 
 #Names:
@@ -16,42 +16,7 @@ import random
 import numpy as np
 
 random.seed(84)
-#functions for data set creation
-def variant(arr,sentryPos):
-    changed = 0
-    new_H = arr.copy();
-    for i in range(len(new_H)):
-        if(changed == 0 and int(new_H[i]) == 1 and i>sentryPos):
-            new_H[i] = 0
-            changed = changed+1
-    return new_H
 
-def variant_list(arr):
-    for i in range(len(arr)):
-        for j in range(len(arr[i])):
-            if arr[i][j] == 1:
-                test = variant(arr[i],j)
-                arr.append(test)
-    return arr
-
-def remove_duplicates (userList):
-    i = 0
-    while i < len(userList):
-        j = 1
-        while j < len(userList):
-            if userList[i] == userList[j] and i != j:
-                userList [j] = userList [len(userList) - 1]
-                userList.pop()
-                j -= 1
-            else:
-                j += 1
-        i += 1
-
-def addVariants(arr):
-    remove_duplicates(arr)
-    arr = variant_list(arr)
-    remove_duplicates(arr)
-    return arr
 #functions for machine learning and other essential parts below
 def create_s(small_tuple, original_list):
     S = []
@@ -107,48 +72,7 @@ def pred_L_wrong(Si, THs, n, d = 0.5):
     sum = sum + THs[decnum] - (d*n)
     return sum
 
-# Dataset creation # 
-goodH = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
 
-listOfH = goodH.copy()
-
-while len(listOfH)<300:
-    listOfH = addVariants(listOfH)
-
-goodL = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
-
-listOfL = goodL.copy()
-
-while len(listOfL)<300:
-    listOfL = addVariants(listOfL)
-
-trainingSet = []
-testingSet = []
-for i in range(200):
-    trainingSet.append(listOfH[i]) #first 200 in text file will be H the following 200 will be L
-for i in range(101,301):
-    trainingSet.append(listOfL[i])
-for i in range(201,301):
-    testingSet.append(listOfH[i])
-for i in range(100):
-    testingSet.append(listOfL[i])
-
-with open("data_set.txt","w") as dataSet:
-    for i in range(len(trainingSet)):
-        for j in range(len(trainingSet[i])):
-            dataSet.write(str(trainingSet[i][j]))
-        if i < 200:
-            dataSet.write(" H\n")
-        else:
-            dataSet.write(" L\n")
-    for i in range(len(testingSet)):
-        for j in range(len(testingSet[i])):
-            dataSet.write(str(testingSet[i][j]))
-        if i < 100:
-            dataSet.write(" H\n")
-        else:
-            dataSet.write(" L\n")
-    dataSet.close
 
 
 # Create testing set #
@@ -243,6 +167,7 @@ for i in range (len(allLs)):
 print("")
 # Testing Section #
 x = [] # list to find accuracy will append 1 if match 0 if not
+j = 0
 for i in newShuffledArrayTesting:
     S1 = create_s(J1, i)
     S2 = create_s(J2, i)
@@ -266,7 +191,7 @@ for i in newShuffledArrayTesting:
     total_sumL = sumL1 + sumL2 + sumL3 + sumL4
     
 #    print(total_sumH, total_sumL)
-     
+
     predicted_letter = predict_class(total_sumH, total_sumL)
     actual_letter = newShuffledArrayTesting[j][13]
     b = correct_class(actual_letter, predicted_letter)
@@ -294,16 +219,12 @@ for i in newShuffledArrayTesting:
             b = correct_class(actual_letter, predicted_letter)
             n += 1
     print(newShuffledArrayTesting[j][0:12], "Actual Class:", actual_letter, "Predicted Class:", predicted_letter, b)
+    j += 1
     if b == "True":
         x.append(1)
     elif b == "False":
         x.append(0)
 average = np.mean(x)
-print(average*100, "% accuracy", sep = "")
 
-
-# In[ ]:
-
-
-
+print("\n",average*100, "% accuracy", sep = "")
 

@@ -4,6 +4,11 @@
 # In[1]:
 
 
+import random
+import numpy as np
+
+random.seed(84)
+#functions for data set creation
 def variant(arr,sentryPos):
     changed = 0
     new_H = arr.copy();
@@ -13,24 +18,6 @@ def variant(arr,sentryPos):
             changed = changed+1
     return new_H
 
-
-# In[2]:
-
-
-def printList(arr):
-    for i in range(len(arr)):
-        for j in range(len(arr[i])):
-            if (j+1)%3 != 0:
-                print(arr[i][j],end = " ")
-            else:
-                print(arr[i][j],end = " ")
-                print()
-        print("-----")
-
-
-# In[3]:
-
-
 def variant_list(arr):
     for i in range(len(arr)):
         for j in range(len(arr[i])):
@@ -38,10 +25,6 @@ def variant_list(arr):
                 test = variant(arr[i],j)
                 arr.append(test)
     return arr
-
-
-# In[4]:
-
 
 def remove_duplicates (userList):
     i = 0
@@ -56,74 +39,38 @@ def remove_duplicates (userList):
                 j += 1
         i += 1
 
-
-# In[5]:
-
-
 def addVariants(arr):
     remove_duplicates(arr)
     arr = variant_list(arr)
     remove_duplicates(arr)
     return arr
-
-
-# In[6]:
-
-
+# Dataset creation # 
 goodH = [[1,0,1,1,1,1,1,0,1,1,0,1],[1,0,1,1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1,1,0,1],[1,0,0,1,1,1,1,0,1,1,0,1],[1,0,0,1,0,0,1,1,1,1,0,1],[1,0,0,1,1,1,1,1,1,1,0,1]]
 
-
-# In[7]:
-
-
 listOfH = goodH.copy()
-
-
-# In[8]:
-
 
 while len(listOfH)<300:
     listOfH = addVariants(listOfH)
 
-
-# In[9]:
-
-
-goodL = [[1,0,0,1,0,0,1,0,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,0,0],[0,1,0,0,1,0,0,1,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,1,0],[1,0,0,1,0,0,1,0,1,1,1,1],[0,1,0,0,1,0,0,1,1,1,1,1],[0,0,1,0,0,1,0,0,1,0,0,1],[0,1,1,0,0,1,0,0,1,0,0,1],[1,0,0,1,0,0,1,1,1,1,1,1],[0,1,0,0,1,0,1,1,0,1,1,0],[0,1,0,0,1,0,1,1,1,1,1,1],[0,0,0,0,0,0,1,0,0,1,1,1],[0,1,1,0,1,1,0,1,1,0,1,1]]
-
-
-# In[10]:
-
+goodL = [[1,0,0,1,0,0,1,0,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,0,0],[0,1,0,0,1,0,0,1,0,1,1,1],[1,0,0,1,0,0,1,0,0,1,1,0],[1,0,0,1,0,0,1,0,1,1,1,1],[0,1,0,0,1,0,0,1,1,1,1,1],[1,0,0,1,0,0,1,1,1,1,1,1],[0,1,0,0,1,0,1,1,0,1,1,0],[0,1,0,0,1,0,1,1,1,1,1,1],[0,1,1,0,1,1,0,1,1,0,1,1]]
 
 listOfL = goodL.copy()
 
-
-# In[11]:
-
-
 while len(listOfL)<300:
     listOfL = addVariants(listOfL)
-
-
-# In[12]:
-
 
 trainingSet = []
 testingSet = []
 for i in range(200):
     trainingSet.append(listOfH[i]) #first 200 in text file will be H the following 200 will be L
-for i in range(200):
+for i in range(101,301):
     trainingSet.append(listOfL[i])
-for i in range(201,301): 
-    testingSet.append(listOfH[i])
 for i in range(201,301):
-    testingSet.append(listOfL[i])    
+    testingSet.append(listOfH[i])
+for i in range(100):
+    testingSet.append(listOfL[i])
 
-
-# In[13]:
-
-
-with open("data_set.txt","a+") as dataSet:
+with open("data_set.txt","w") as dataSet:
     for i in range(len(trainingSet)):
         for j in range(len(trainingSet[i])):
             dataSet.write(str(trainingSet[i][j]))
@@ -139,40 +86,4 @@ with open("data_set.txt","a+") as dataSet:
         else:
             dataSet.write(" L\n")
     dataSet.close
-
-
-# In[14]:
-
-
-with open("data_set.txt","r") as dataSet:
-    print(dataSet.read())
-    dataSet.close()
-
-
-# In[17]:
-
-
-with open("training_set.txt","a+") as ds:
-    for i in range(len(trainingSet)):
-        for j in range(len(trainingSet[i])):
-            ds.write(str(trainingSet[i][j]))
-        if i < 200:
-            ds.write(" H\n")
-        else:
-            ds.write(" L\n")
-    ds.close()
-
-
-# In[18]:
-
-
-with open("testing_set.txt","a+") as dst:
-    for i in range(len(testingSet)):
-        for j in range(len(testingSet[i])):
-            dst.write(str(testingSet[i][j]))
-        if i < 100:
-            dst.write(" H\n")
-        else:
-            dst.write(" L\n")
-    dst.close()
 
